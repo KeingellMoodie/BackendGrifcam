@@ -9,110 +9,139 @@
 // ─────────────────────────────────────────────────────────────
 
 const ProductModel = require('../models/product.model');
+const { uploadToSupabase }  = require('../middleware/upload.middleware');
 
-const ProductController = {
+
 
   // GET /api/products
   // Query params opcionales:
   //   ?category=uuid     → filtra por categoría
   //   ?filter=is_offer   → solo ofertas
   //   ?filter=is_new     → solo novedades
+const ProductController = {
+
+  // GET /api/products
   async getAll(req, res) {
-    const { category, filter } = req.query;
+    try {
+      const { category, filter } = req.query;
+      let products;
 
-    let products;
-    if (category) {
-      products = await ProductModel.findByCategory(category);
-    } else if (filter === 'is_offer' || filter === 'is_new') {
-      products = await ProductModel.findByFlag(filter);
-    } else {
-      products = await ProductModel.findAll();
+      if (category) {
+        products = await ProductModel.findByCategory(category);
+      } else if (filter === 'is_offer' || filter === 'is_new') {
+        products = await ProductModel.findByFlag(filter);
+      } else {
+        products = await ProductModel.findAll();
+      }
+
+      res.json(products);
+    } catch (error) {
+      console.error('Error al obtener productos:', error.message);
+      res.status(500).json({ error: 'Error al obtener los productos.' });
     }
-
-    res.json(products);
   },
 
   // GET /api/products/:id
   async getById(req, res) {
-    const product = await ProductModel.findById(req.params.id);
+    try {
+      const product = await ProductModel.findById(req.params.id);
 
-    if (!product) {
-      return res.status(404).json({ error: 'Producto no encontrado.' });
+      if (!product) {
+        return res.status(404).json({ error: 'Producto no encontrado.' });
+      }
+
+      res.json(product);
+    } catch (error) {
+      console.error('Error al obtener producto:', error.message);
+      res.status(500).json({ error: 'Error al obtener el producto.' });
     }
-
-    res.json(product);
   },
 
   // POST /api/products  ← Requiere JWT
-  // Body (multipart/form-data):
-  //   name, description, price, previous_price (opcional),
-  //   category_id, is_offer, is_new, images (hasta 3 archivos)
   async create(req, res) {
-    const { name, description, price, previous_price,
-            category_id, is_offer, is_new } = req.body;
+    try {
+      const { name, description, price, previous_price,
+              category_id, is_offer, is_new } = req.body;
 
-    if (!name || !price || !category_id) {
-      return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
+      if (!name || !price || !category_id) {
+        return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
+      }
+
+      // Subir cada imagen a Supabase Storage y obtener su URL pública
+      const imageUrls = await Promise.all(
+        (req.files || []).map(file => uploadToSupabase(file))
+      );
+
+      const product = await ProductModel.create({
+        name,
+        description,
+        price:          Number(price),
+        previous_price: previous_price ? Number(previous_price) : null,
+        category_id,
+        is_offer:  is_offer === 'true' || is_offer === true,
+        is_new:    is_new   === 'true' || is_new   === true,
+        imageUrls
+      });
+
+      res.status(201).json({ message: 'Producto creado exitosamente.', product });
+    } catch (error) {
+      console.error('Error al crear producto:', error.message);
+      res.status(500).json({ error: 'Error al crear el producto.' });
     }
-
-    // req.files es el array de imágenes subidas por Multer
-    // Si no se subió ninguna imagen, imageUrls queda vacío []
-    const imageUrls = (req.files || []).map(f => `/uploads/${f.filename}`);
-
-    const product = await ProductModel.create({
-      name,
-      description,
-      price:          Number(price),
-      previous_price: previous_price ? Number(previous_price) : null,
-      category_id,
-      is_offer:  is_offer === 'true' || is_offer === true,
-      is_new:    is_new   === 'true' || is_new   === true,
-      imageUrls
-    });
-
-    res.status(201).json({ message: 'Producto creado exitosamente.', product });
   },
 
   // PUT /api/products/:id  ← Requiere JWT
-  // Si se envían imágenes nuevas → reemplaza las anteriores.
-  // Si NO se envían imágenes     → mantiene las existentes.
   async update(req, res) {
-    const { name, description, price, previous_price,
-            category_id, is_offer, is_new } = req.body;
+    try {
+      const { name, description, price, previous_price,
+              category_id, is_offer, is_new } = req.body;
 
-    if (!name || !price || !category_id) {
-      return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
+      if (!name || !price || !category_id) {
+        return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
+      }
+
+      // Si se enviaron imágenes nuevas las subimos a Supabase
+      // Si no se enviaron, el modelo mantiene las anteriores
+      const imageUrls = await Promise.all(
+        (req.files || []).map(file => uploadToSupabase(file))
+      );
+
+      const product = await ProductModel.update(req.params.id, {
+        name,
+        description,
+        price:          Number(price),
+        previous_price: previous_price ? Number(previous_price) : null,
+        category_id,
+        is_offer:  is_offer === 'true' || is_offer === true,
+        is_new:    is_new   === 'true' || is_new   === true,
+        imageUrls
+      });
+
+      if (!product) {
+        return res.status(404).json({ error: 'Producto no encontrado.' });
+      }
+
+      res.json({ message: 'Producto actualizado exitosamente.', product });
+    } catch (error) {
+      console.error('Error al actualizar producto:', error.message);
+      res.status(500).json({ error: 'Error al actualizar el producto.' });
     }
-
-    const imageUrls = (req.files || []).map(f => `/uploads/${f.filename}`);
-
-    const product = await ProductModel.update(req.params.id, {
-      name,
-      description,
-      price:          Number(price),
-      previous_price: previous_price ? Number(previous_price) : null,
-      category_id,
-      is_offer:  is_offer === 'true' || is_offer === true,
-      is_new:    is_new   === 'true' || is_new   === true,
-      imageUrls
-    });
-
-    if (!product) {
-      return res.status(404).json({ error: 'Producto no encontrado.' });
-    }
-
-    res.json({ message: 'Producto actualizado exitosamente.', product });
   },
 
   // DELETE /api/products/:id  ← Requiere JWT
   async delete(req, res) {
-    const deleted = await ProductModel.delete(req.params.id);
+    try {
+      const deleted = await ProductModel.delete(req.params.id);
 
-    if (!deleted) {
-      return res.status(404).json({ error: 'Producto no encontrado.' });
+      if (!deleted) {
+        return res.status(404).json({ error: 'Producto no encontrado.' });
+      }
+
+      res.json({ message: 'Producto eliminado exitosamente.' });
+    } catch (error) {
+      console.error('Error al eliminar producto:', error.message);
+      res.status(500).json({ error: 'Error al eliminar el producto.' });
     }
-
-    res.json({ message: 'Producto eliminado exitosamente.' });
   }
 };
 
