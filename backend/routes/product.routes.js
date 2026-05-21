@@ -21,7 +21,7 @@ router.get('/:id', ProductController.getById);
 router.post('/', verifyToken, (req, res, next) => {
   console.log('Content-Type:', req.headers['content-type']);
   next();
-}, upload.array('images', 3), ProductController.create);
+}, upload.any(), ProductController.create);
 router.put('/:id',    verifyToken, upload.array('images', 3), ProductController.update);
 router.delete('/:id', verifyToken, ProductController.delete);
 
