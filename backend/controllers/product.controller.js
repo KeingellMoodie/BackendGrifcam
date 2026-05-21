@@ -60,9 +60,6 @@ const ProductController = {
   // POST /api/products  ← Requiere JWT
   async create(req, res) {
     try {
-      console.log('Archivos recibidos:', req.files); 
-      console.log('Body recibido:', req.body);
-      console.log('Fieldnames:', (req.files || []).map(f => f.fieldname));
       const { name, description, price, previous_price,
               category_id, is_offer, is_new } = req.body;
 
