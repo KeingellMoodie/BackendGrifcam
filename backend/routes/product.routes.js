@@ -18,10 +18,7 @@ router.get('/:id', ProductController.getById);
 
 // ── Rutas protegidas ──────────────────────────────────────────
 // upload.array('images', 3) → campo "images", máximo 3 archivos
-router.post('/', verifyToken, (req, res, next) => {
-  console.log('Content-Type:', req.headers['content-type']);
-  next();
-}, upload.any(), ProductController.create);
+router.post('/',      verifyToken, upload.array('images', 3), ProductController.create);
 router.put('/:id',    verifyToken, upload.array('images', 3), ProductController.update);
 router.delete('/:id', verifyToken, ProductController.delete);
 
