@@ -19,6 +19,12 @@ const authRoutes     = require('./routes/auth.routes');
 const productRoutes  = require('./routes/product.routes');
 const categoryRoutes = require('./routes/category.routes');
 
+const businessRoutes  = require('./routes/business.routes');
+const horarioRoutes   = require('./routes/horario.routes');
+const politicasRoutes = require('./routes/politicas.routes');
+const videoRoutes     = require('./routes/video.routes');
+
+
 const app  = express();
 const PORT = process.env.PORT || 5000;
 
@@ -46,6 +52,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth',       authRoutes);
 app.use('/api/products',   productRoutes);
 app.use('/api/categories', categoryRoutes);
+
+app.use('/api/business',  businessRoutes);
+app.use('/api/horario',   horarioRoutes);
+app.use('/api/politicas', politicasRoutes);
+app.use('/api/videos',    videoRoutes);
 
 // Ruta raíz para verificar que el servidor está vivo
 app.get('/', (req, res) => {

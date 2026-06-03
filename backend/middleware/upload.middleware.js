@@ -23,32 +23,42 @@ function fileFilter(req, file, cb) {
   else cb(new Error('Solo se permiten imágenes (jpg, png, webp, gif)'));
 }
 
+function videoFilter(req, file, cb) {
+  const extOk  = /mp4|webm|mov|avi/.test(path.extname(file.originalname).toLowerCase());
+  const mimeOk = /video\//.test(file.mimetype);
+  if (extOk && mimeOk) cb(null, true);
+  else cb(new Error('Solo se permiten videos (mp4, webm, mov, avi)'));
+}
+
 const upload = multer({
   storage,
   fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB por imagen
 });
 
+const uploadVideo = multer({ storage, fileFilter: videoFilter,
+  limits: { fileSize: 100 * 1024 * 1024 } });
+
 // Sube UN archivo a Supabase Storage y devuelve su URL pública.
 // Se llama desde el controlador para cada imagen en req.files.
-async function uploadToSupabase(file) {
+async function uploadFileToSupabase(file, bucket) {
   const fileName = `${Date.now()}-${file.originalname.replace(/\s/g, '_')}`;
-
   const { error } = await supabase.storage
-    .from('product-images')        // nombre del bucket en Supabase
-    .upload(fileName, file.buffer, {
-      contentType: file.mimetype,
-      upsert: false
-    });
-
+    .from(bucket).upload(fileName, file.buffer, { contentType: file.mimetype, upsert: false });
   if (error) throw error;
-
-  // Devuelve la URL pública permanente de la imagen
-  const { data } = supabase.storage
-    .from('product-images')
-    .getPublicUrl(fileName);
-
+  const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
   return data.publicUrl;
 }
 
-module.exports = { upload, uploadToSupabase };
+async function deleteFileFromSupabase(publicUrl, bucket) {
+  const fileName = publicUrl.split(`/${bucket}/`)[1];
+  if (!fileName) return;
+  const { error } = await supabase.storage.from(bucket).remove([fileName]);
+  if (error) console.error('Error borrando de Storage:', error.message);
+}
+
+async function uploadToSupabase(file) {
+  return uploadFileToSupabase(file, 'product-images');
+}
+
+module.exports = { upload, uploadVideo, uploadToSupabase, uploadFileToSupabase, deleteFileFromSupabase };
