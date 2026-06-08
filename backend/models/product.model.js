@@ -106,13 +106,13 @@ const ProductModel = {
   // ── Crear un producto con sus imágenes ─────────────────────
   // imageUrls: array de strings con las rutas de las imágenes
   // Ejemplo: ['/uploads/img1.jpg', '/uploads/img2.jpg']
-  async create({ name, description, price, previous_price, category_id, is_offer, is_new, imageUrls = [] }) {
+  async create({ name, description, price, previous_price, category_id, is_offer, is_new, is_featured, imageUrls = [] }) {
 
     // 1. Insertamos el producto (sin image_url — ya no existe)
     const { data: product, error: productError } = await supabase
       .from('products')
       .insert({ name, description, price, previous_price: previous_price || null,
-                category_id, is_offer, is_new })
+                category_id, is_offer, is_new, is_featured })
       .select()
       .single();
 
@@ -141,13 +141,13 @@ const ProductModel = {
   // Si se suben imágenes nuevas, se eliminan las anteriores.
   // Si no se suben imágenes, se mantienen las existentes.
   async update(id, { name, description, price, previous_price, category_id,
-                     is_offer, is_new, imageUrls = [] }) {
+                     is_offer, is_new, is_featured, imageUrls = [] }) {
 
     // 1. Actualizamos los datos del producto
     const { error: updateError } = await supabase
       .from('products')
       .update({ name, description, price, previous_price: previous_price || null,
-                category_id, is_offer, is_new })
+                category_id, is_offer, is_new, is_featured })
       .eq('id', id);
 
     if (updateError) throw updateError;
