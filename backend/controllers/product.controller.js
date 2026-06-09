@@ -61,7 +61,7 @@ const ProductController = {
   async create(req, res) {
     try {
       const { name, description, price, previous_price,
-              category_id, is_offer, is_new } = req.body;
+              category_id, is_offer, is_new , is_featured} = req.body;
 
       if (!name || !price || !category_id) {
         return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
@@ -80,6 +80,7 @@ const ProductController = {
         category_id,
         is_offer:  is_offer === 'true' || is_offer === true,
         is_new:    is_new   === 'true' || is_new   === true,
+        is_featured: is_featured === 'true' || is_featured === true,
         imageUrls
       });
 
@@ -94,7 +95,7 @@ const ProductController = {
   async update(req, res) {
     try {
       const { name, description, price, previous_price,
-              category_id, is_offer, is_new } = req.body;
+              category_id, is_offer, is_new , is_featured} = req.body;
 
       if (!name || !price || !category_id) {
         return res.status(400).json({ error: 'Nombre, precio y categoría son requeridos.' });
@@ -114,6 +115,7 @@ const ProductController = {
         category_id,
         is_offer:  is_offer === 'true' || is_offer === true,
         is_new:    is_new   === 'true' || is_new   === true,
+        is_featured: is_featured === 'true' || is_featured === true,
         imageUrls
       });
 
