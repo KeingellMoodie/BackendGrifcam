@@ -20,5 +20,7 @@ router.post('/login', AuthController.login);
 // POST /api/auth/seed — crea el admin la primera vez
 // Comenta o elimina esta ruta una vez que hayas creado el admin
 router.post('/seed', AuthController.seed);
+router.post('/verify-recovery-code', AuthController.verifyRecoveryCode);
+router.post('/reset-password',       AuthController.resetPassword);
 
 module.exports = router;
