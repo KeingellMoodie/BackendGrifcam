@@ -81,6 +81,61 @@ const AuthController = {
     }
   },
 
+  async verifyRecoveryCode(req, res) {
+    try {
+      const { recovery_code } = req.body;
+      if (!recovery_code) {
+        return res.status(400).json({ error: 'Código requerido.' });
+      }
+
+      const record = await UserModel.getRecoveryCode();
+      if (!record) {
+        return res.status(404).json({ error: 'No hay código de recuperación configurado.' });
+      }
+
+      const isValid = await bcrypt.compare(recovery_code, record.code);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Código incorrecto.' });
+      }
+
+      res.json({ message: 'Código verificado correctamente.' });
+    } catch (error) {
+      console.error('Error en verifyRecoveryCode:', error.message);
+      res.status(500).json({ error: 'Error al verificar el código.' });
+    }
+  },
+
+  // POST /api/auth/reset-password
+  // Verifica el código Y actualiza la contraseña
+  async resetPassword(req, res) {
+    try {
+      const { recovery_code, new_password } = req.body;
+      if (!recovery_code || !new_password) {
+        return res.status(400).json({ error: 'Código y nueva contraseña son requeridos.' });
+      }
+
+      // 1. Verificar el código
+      const record = await UserModel.getRecoveryCode();
+      if (!record) {
+        return res.status(404).json({ error: 'No hay código de recuperación configurado.' });
+      }
+
+      const isValid = await bcrypt.compare(recovery_code, record.code);
+      if (!isValid) {
+        return res.status(401).json({ error: 'Código de recuperación incorrecto.' });
+      }
+
+      // 2. Hashear la nueva contraseña y actualizar
+      const newHash = await bcrypt.hash(new_password, 10);
+      await UserModel.updateAllPasswords(newHash);
+
+      res.json({ message: 'Contraseña actualizada correctamente.' });
+    } catch (error) {
+      console.error('Error en resetPassword:', error.message);
+      res.status(500).json({ error: 'Error al restablecer la contraseña.' });
+    }
+  },
+
   // POST /api/auth/seed
   async seed(req, res) {
     try {
