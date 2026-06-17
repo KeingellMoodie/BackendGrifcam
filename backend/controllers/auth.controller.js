@@ -110,7 +110,7 @@ const AuthController = {
       console.error('ERROR COMPLETO:', error);
       return res.status(500).json({ error: 'Error al verificar el código.' });
     }
-  }
+  },
 
   // POST /api/auth/reset-password
   // Verifica el código Y actualiza la contraseña
