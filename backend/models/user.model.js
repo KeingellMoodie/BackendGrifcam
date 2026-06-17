@@ -42,9 +42,11 @@ const UserModel = {
   async updateAllPasswords(newPasswordHash) {
     const { error } = await supabase
       .from('users')
-      .update({ password_hash: newPasswordHash });
+      .update({ password_hash: newPasswordHash })
+      .eq('username', 'angelo');
+  
     if (error) throw error;
-  },
+  }
 
   // Crea el usuario admin (úsalo una sola vez para inicializar la BD)
   async createAdmin(username, password) {
