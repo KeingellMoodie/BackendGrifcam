@@ -46,7 +46,7 @@ const UserModel = {
       .eq('username', 'angelo');
   
     if (error) throw error;
-  }
+  },
 
   // Crea el usuario admin (úsalo una sola vez para inicializar la BD)
   async createAdmin(username, password) {
