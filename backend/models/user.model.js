@@ -29,6 +29,23 @@ const UserModel = {
     return bcrypt.compare(plainPassword, hashedPassword);
   },
 
+  async getRecoveryCode() {
+    const { data, error } = await supabase
+      .from('recovery_codes')
+      .select('*')
+      .single();
+    if (error && error.code !== 'PGRST116') throw error;
+    return data; // { id, code (hash) }
+  },
+
+  // Actualiza la contraseña de todos los usuarios admin
+  async updateAllPasswords(newPasswordHash) {
+    const { error } = await supabase
+      .from('users')
+      .update({ password_hash: newPasswordHash });
+    if (error) throw error;
+  },
+
   // Crea el usuario admin (úsalo una sola vez para inicializar la BD)
   async createAdmin(username, password) {
     const hash = await bcrypt.hash(password, 10);
