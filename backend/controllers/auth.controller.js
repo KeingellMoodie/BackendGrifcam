@@ -85,28 +85,32 @@ const AuthController = {
   async verifyRecoveryCode(req, res) {
     try {
       const { recovery_code } = req.body;
+  
       console.log('Código recibido:', recovery_code);
   
       const record = await UserModel.getRecoveryCode();
+  
       console.log('Registro en BD:', record);
   
-      if (!record) {
-        return res.status(404).json({ error: 'No hay código de recuperación configurado.' });
-      }
-  
       const isValid = await bcrypt.compare(recovery_code, record.code);
+  
       console.log('¿Coincide?:', isValid);
   
       if (!isValid) {
         return res.status(401).json({ error: 'Código incorrecto.' });
       }
   
-      return res.json({ message: 'Código verificado correctamente.' }); // ← el return aquí
+      console.log('ANTES DEL RESPONSE');
+  
+      return res.status(200).json({
+        ok: true
+      });
+  
     } catch (error) {
-      console.error('Error en verifyRecoveryCode:', error.message);
-      res.status(500).json({ error: 'Error al verificar el código.' });
+      console.error('ERROR COMPLETO:', error);
+      return res.status(500).json({ error: 'Error al verificar el código.' });
     }
-  },
+  }
 
   // POST /api/auth/reset-password
   // Verifica el código Y actualiza la contraseña
