@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -108,39 +108,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// ─────────────────────────────────────────────────────────────
 // Archivo: controllers/horario.controller.js
 // Endpoints:
@@ -151,30 +151,30 @@ const HorarioModel = require('../models/horario.model');
 &nbsp;
 const HorarioController = {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync getAll(req, res) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const data = <span class="cstat-no" title="statement not covered" >await HorarioModel.getAll();</span>
-<span class="cstat-no" title="statement not covered" >      res.json(data);</span>
+  async getAll(req, res) {
+    try {
+      const data = await HorarioModel.getAll();
+      res.json(data);
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('Error en horario.getAll:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >      res.status(500).json({ error: 'Error al obtener el horario.' });</span>
+      console.error('Error en horario.getAll:', error.message);
+      res.status(500).json({ error: 'Error al obtener el horario.' });
     }
   },
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync update(req, res) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-      const { horas, abierto } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const { horas, abierto } = req.body;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!horas &amp;&amp; abierto === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: 'Se requiere al menos horas o abierto.' });</span>
+      if (!horas &amp;&amp; abierto === undefined) {
+        return res.status(400).json({ error: 'Se requiere al menos horas o abierto.' });
       }
 &nbsp;
-      const data = <span class="cstat-no" title="statement not covered" >await HorarioModel.update(id, { horas, abierto });</span>
-<span class="cstat-no" title="statement not covered" >      res.json({ message: 'Horario actualizado correctamente.', data });</span>
+      const data = await HorarioModel.update(id, { horas, abierto });
+      res.json({ message: 'Horario actualizado correctamente.', data });
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('Error en horario.update:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >      res.status(500).json({ error: 'Error al actualizar el horario.' });</span>
+      console.error('Error en horario.update:', error.message);
+      res.status(500).json({ error: 'Error al actualizar el horario.' });
     }
   }
 };
@@ -187,7 +187,7 @@ module.exports = HorarioController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-17T03:14:34.192Z
+                at 2026-06-19T19:14:17.598Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -108,39 +108,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// ─────────────────────────────────────────────────────────────
 // Archivo: controllers/politicas.controller.js
 // Endpoints:
@@ -151,30 +151,30 @@ const PoliticasModel = require('../models/politicas.model');
 &nbsp;
 const PoliticasController = {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync getAll(req, res) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const data = <span class="cstat-no" title="statement not covered" >await PoliticasModel.getAll();</span>
-<span class="cstat-no" title="statement not covered" >      res.json(data);</span>
+  async getAll(req, res) {
+    try {
+      const data = await PoliticasModel.getAll();
+      res.json(data);
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('Error en politicas.getAll:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >      res.status(500).json({ error: 'Error al obtener las políticas.' });</span>
+      console.error('Error en politicas.getAll:', error.message);
+      res.status(500).json({ error: 'Error al obtener las políticas.' });
     }
   },
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync update(req, res) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-      const { titulo, contenido } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const { titulo, contenido } = req.body;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!titulo || !contenido) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: 'Título y contenido son requeridos.' });</span>
+      if (!titulo || !contenido) {
+        return res.status(400).json({ error: 'Título y contenido son requeridos.' });
       }
 &nbsp;
-      const data = <span class="cstat-no" title="statement not covered" >await PoliticasModel.update(id, { titulo, contenido });</span>
-<span class="cstat-no" title="statement not covered" >      res.json({ message: 'Política actualizada correctamente.', data });</span>
+      const data = await PoliticasModel.update(id, { titulo, contenido });
+      res.json({ message: 'Política actualizada correctamente.', data });
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('Error en politicas.update:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >      res.status(500).json({ error: 'Error al actualizar la política.' });</span>
+      console.error('Error en politicas.update:', error.message);
+      res.status(500).json({ error: 'Error al actualizar la política.' });
     }
   }
 };
@@ -187,7 +187,7 @@ module.exports = PoliticasController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-17T03:14:34.192Z
+                at 2026-06-19T19:14:17.598Z
             </div>
         <script src="../prettify.js"></script>
         <script>
